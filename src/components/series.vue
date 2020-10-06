@@ -17,6 +17,11 @@
   export default {
     created()  {
       let labelId = window.sessionStorage.getItem('labelId');
+	  if(labelId) {
+		  
+	  }else  {
+		labelId = 3;
+	  }
       this.getSeries(labelId);
     },
     data() {

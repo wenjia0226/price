@@ -35,7 +35,7 @@
     data() {
       return {
         isCollapse: false,
-        activeIndex: '/index',
+        activeIndex: '/singleFocus',
         menuList: []
       }
     },
@@ -70,7 +70,7 @@
     }
   }
 </script>
-<style lang="stylus" >
+<style lang="stylus"  scoped>
   .el-menu
     border-right:none
     .toggle-button
