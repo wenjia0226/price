@@ -47,7 +47,21 @@
       }
     },
     methods: {
+		//加载转圈
+		openFullScreen() {
+		  const loading = this.$loading({
+		  lock: true,
+		  text: 'Loading',
+		  spinner: 'el-icon-loading',
+		  background: 'rgba(0,0,0,0.7)'
+		  })
+		  return loading;
+		},
+		closeFullScreen(loading) {
+		  loading.close()
+		},
       getSeries(labelId) {
+				this.openFullScreen()
         let param = new FormData();
         param.append('id', labelId)
         axios({
@@ -56,8 +70,9 @@
           data:param
          }).then(this.handleGetSeriesSucc.bind(this)).catch((err) => {console.log(err)})
      },
-     handleGetSeriesSucc(res) {
+     handleGetSeriesSucc(res) {	
        if(res.data.data) {
+		 this.closeFullScreen(this.openFullScreen())
          this.seriesList = res.data.data;
        }
 

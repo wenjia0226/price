@@ -41,7 +41,6 @@
     },
     methods: {
       goto(id) {
-        console.log(id)
         window.sessionStorage.setItem('labelId' ,id);
       },
       getMenuList(){
