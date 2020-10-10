@@ -4,7 +4,7 @@
       <el-carousel :height="bannerH+'px'"  :width= "bannerW + 'px'"  :autoplay="false">
          <el-carousel-item  v-for="item in swiperList" :key="item.id">
 					 <router-link to="/">
-              <img  class="imgBox" :src="item.pic" style="border-radius: 30px"  width="100%" height="100%" object-fit="cover">
+              <img  class="imgBox" :src="item.pic" style="border-radius: 0.3rem"  width="100%" height="100%" object-fit="cover">
           </router-link>
 				 </el-carousel-item>
        </el-carousel>

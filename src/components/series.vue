@@ -3,7 +3,7 @@
     <div class="seriesWrap">
       <div class="itemWrap" v-for="item in seriesList" :key="item.id" @click="gotoDetail(item.id)" >
            <!-- <el-image :src="item.path"></el-image> -->
-      <el-image class="imgBox"  :src="item.introduce"></el-image>
+		<img class="imgBox"  :src="item.introduce" style="border-radius: .2rem" ></img>
 
       <!-- <img class="imgBox" :src="item.introduce"> -->
         <div class="title">{{item.name}}</div>
@@ -103,7 +103,7 @@
        .imgBox
           width: 80%;
           height: calc(80%);
-          margin: 20px;
+          margin: 0.2rem;
       .title
         font-size: .16rem
         height: 0.3rem
@@ -115,5 +115,4 @@
         text-overflow:ellipsis;
         white-space: nowrap;
         letter-spacing: 0.06rem
-
 </style>
