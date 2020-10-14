@@ -16,14 +16,12 @@
   import axios from 'axios'
   export default {
      created() {
-         this.id = this.$router.history.current.query.id;
+     this.id = this.$router.history.current.query.id;
 		 this.getSwiper();
 		 this.$nextTick(() => {
 			this.bannerH = document.body.clientHeight * 0.8;
 			this.bannerW = document.body.clientHeight * 0.8  / 2 * 3 
-		 })
-		 console.log(this.bannerH, this.bannerW)
-        
+		 })     
        },
 	   mounted() {
 		   window.addEventListener('resize', () => {

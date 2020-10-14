@@ -3,15 +3,15 @@
     <el-container  class="home-container">
       <el-aside  :width="isCollapse ? '0.64rem': '2rem'" style="min-height: 100vh">
         <el-menu
-       :default-active="this.$route.path"
-       class="el-menu-vertical-demo"
-       background-color="#333744"
-       text-color="#fff"
-       active-text-color="#409eff"
-       router
-       :unique-opened="true"
-       :collapse="isCollapse"
-       :collapse-transition="false" >
+				 :default-active="this.$route.path"
+				 class="el-menu-vertical-demo"
+				 background-color="#333744"
+				 text-color="#fff"
+				 active-text-color="#409eff"
+				 router
+				 :unique-opened="true"
+				 :collapse="isCollapse"
+				 :collapse-transition="false" >
                <!-- <div class="toggle-button" @click="toggleCollapse"> |||</div> -->
                <el-menu-item :index="'/'+ item.path"   v-for="item in menuList" :key="item.id" @click="saveNavState(item.id, '/' + item.path)">
                  <i class="el-icon-set-up"></i>

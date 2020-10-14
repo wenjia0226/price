@@ -3,12 +3,14 @@ import Router from 'vue-router'
 import Home from '@/components/home'
 import series from '@/components/series'
 import detail from '@/components/detail'
+import different from '@/components/different'
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {path: '/', redirect: '/singleFocus'},
     {path: '/detail', component: detail},
+	{path: '/different', component: different},
    {
      path: '/',
      component: Home,
