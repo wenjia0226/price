@@ -1,12 +1,11 @@
 <template>
   <div>
+	<!--  <el-button  type="primary"  @click="goBack" style="margin: .2rem ">返回</el-button> -->
     <div class="swiperWrap">
       <el-carousel :height="bannerH+'px'"  :width= "bannerW + 'px'"  :autoplay="false">
-         <el-carousel-item  v-for="item in swiperList" :key="item.id">
-					 <router-link to="/">
-              <img  class="imgBox" :src="item.pic" style="border-radius: 0.3rem"  width="100%" height="100%" object-fit="cover">
-          </router-link>
-				 </el-carousel-item>
+         <el-carousel-item   trigger="hover" v-for="item in swiperList" :key="item.id">
+              <img  @dblclick="goBack" class="imgBox" :src="item.pic" style="border-radius: 0.3rem"  width="100%" height="100%" object-fit="cover">
+		 </el-carousel-item>
        </el-carousel>
     </div>
   </div>
@@ -37,6 +36,9 @@
           }
         },
       methods: {
+		  goBack() {
+			  window.close()
+		  },
 		  //加载转圈
 		  openFullScreen() {
 		    const loading = this.$loading({
