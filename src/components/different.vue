@@ -6,9 +6,8 @@
 		</el-col>
 	</el-row>
 	<div  class="imgBox">
-	
 	   <div class="itemBox" v-for="(item, index) in differentList" :key="index">				
-			 <el-image :src="item.pic" fit="contain"  style="border-radius: .2rem"></el-image>
+			 <el-image @dblclick="goBack"  :src="item.pic" fit="contain"  style="border-radius: .2rem"></el-image>
 			 <div class="title">{{item.seriesName}}</div>
 	   </div>
 	</div>
@@ -31,6 +30,9 @@ export default {
 	   }
    },
    methods: {
+	   goBack() {
+	     window.close()
+	   },
 	   //加载转圈
 	   openFullScreen() {
 	     const loading = this.$loading({
