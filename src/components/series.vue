@@ -1,7 +1,7 @@
 <template>
   <div>
 	  <el-row style="margin-bottom: .2rem">
-		  <el-col :span="4" :offset="20">
+		  <el-col :span="6" :offset="18">
 			  <el-button type="primary" size="mini" @click="seeDifferent">查看对比</el-button>
 			  <el-button type="success" size="mini"@click="clearChoose">清空选项</el-button>
 		  </el-col>
@@ -24,9 +24,9 @@
     created()  {
       let labelId = window.sessionStorage.getItem('labelId');
 	  this.selectedOne = window.sessionStorage.getItem('oneSelected');
-	  // if(this.selectedOne) {
-		 //  this.selectedArr.push(selectedOne)
-	  // }
+	  if(this.selectedOne) {
+		   this.selectedArr.push(Number(this.selectedOne[0]));
+	  }
 	  if(labelId) {
 		  
 	  }else  {
@@ -58,15 +58,35 @@
    },
     methods: {
 		seeDifferent() {
-			let routeUrl = this.$router.resolve({
-			  path: '/different',
-			  query: {
-			    one:this.selectedArr[0],
-				two: this.selectedArr[1]
-			  }
-			 });
-			 window.open(routeUrl.href, '_blank');
-		     this.clearChoose()
+			if(this.selectedArr.length == 3) {
+				let routeUrl = this.$router.resolve({
+				  path: '/different',
+				  query: {
+				    one:this.selectedArr[0],
+					two: this.selectedArr[1],
+					three: this.selectedArr[2]
+				  }
+				 });
+				 window.open(routeUrl.href, '_blank');
+				 this.clearChoose()
+			}else if(this.selectedArr.length == 2) {
+				let routeUrl = this.$router.resolve({
+				  path: '/different',
+				  query: {
+				    one:this.selectedArr[0],
+					two: this.selectedArr[1]
+				  }
+				 });
+				 window.open(routeUrl.href, '_blank');
+				 this.clearChoose()
+			}else {
+				this.$message.error({
+					message: '至少选择2个系列做对比',
+					duration: 1000
+				})
+			}
+			
+			
 		},
 		clearChoose() {
 			this.$router.go(0);
@@ -74,9 +94,6 @@
 			window.sessionStorage.setItem('oneSelected', '')
 		},
 		getChooseItem(id,checked) {
-			if(this.selectedOne) {
-				this.selectedArr = []
-			}
 			this.seriesList.forEach((item, index) => {
 				if(item.id == id) {
 					item.checked = !checked
@@ -86,13 +103,14 @@
 					}
 				}	
 			})
+			// console.log(this.selectedArr,88)
 			// 一个标签一个
 			if(this.selectedArr.length == 1) {
 				window.sessionStorage.setItem('oneSelected', this.selectedArr[0])
 			}
 			//一个标签里选择两个系列
 			
-			this.disable = this.selectedArr.length >=2 ? true: false;
+			this.disable = this.selectedArr.length >= 3 ? true: false;
 			
 			// window.sessionStorage.setItem('chooseId', JSON.stringify(this.selectedArr))
 			// this.seriesList = seriesList;

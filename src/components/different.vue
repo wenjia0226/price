@@ -13,19 +13,22 @@
 	</div>
 	</div>
 </template>
-
 <script>
 import axios from 'axios'
 export default {
    created() {
     this.one = this.$router.history.current.query.one;
     this.two = this.$router.history.current.query.two;
+	this.three = this.$router.history.current.query.three;
+	this.concatNum = this.one + ','+  this.two + ','+  this.three;
 	this.getDifferent()
 	},
    data() {
 	   return {
 		   one: '',
 		   two: '',
+		   three: '',
+		   concatNum: '',
 		   differentList: []
 	   }
    },
@@ -49,8 +52,7 @@ export default {
 	getDifferent() {
 	this.openFullScreen()
       let param = new FormData();
-      param.append('one', this.one);
-      param.append('two', this.two)
+      param.append('one', this.concatNum);
       axios({
         method: 'post',
         url: '/lightspace/priceclient/contrast',
@@ -84,7 +86,7 @@ export default {
 		}
 	 .itemBox{
 			text-align: center;
-			width: 49%;
+			flex: 1;
 		}
 	.title{
 		font-size: .2rem;
