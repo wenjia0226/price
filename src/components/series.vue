@@ -10,9 +10,7 @@
     <div class="seriesWrap">
 		
       <div class="itemWrap" v-for="item in seriesList" :key="item.id">			
-		  <!-- <img class="imgBox"  :src="item.introduce" style="border-radius: .2rem" ></img> -->
-		  <el-checkbox :checked="item.checked" @change="getChooseItem(item.id, item.checked)" :disabled="disable">选择对比</el-checkbox>
-		  <el-image @click="gotoDetail(item.id)" class="imgBox"  :src="item.introduce" style="border-radius: .2rem" fit="contain"></el-image>
+			  <el-image @click="gotoDetail(item.id)" class="imgBox"  :src="item.introduce" style="border-radius: .2rem" fit="contain"></el-image>
 		  <div class="title">{{item.name}}</div>
       </div>
     </div>
@@ -22,11 +20,11 @@
   import axios from 'axios'
   export default {
     created()  {
-      let labelId = window.sessionStorage.getItem('labelId');
-	  this.selectedOne = window.sessionStorage.getItem('oneSelected');
-	  if(this.selectedOne) {
-		   this.selectedArr.push(Number(this.selectedOne[0]));
+      let labelId = window.localStorage.getItem('labelId');
+	  if(window.localStorage.getItem('selectArr')) {
+		   this.selectedArr = window.localStorage.getItem('selectArr').split(',');
 	  }
+	 
 	  if(labelId) {
 		  
 	  }else  {
@@ -58,6 +56,7 @@
    },
     methods: {
 		seeDifferent() {
+			console.log(this.selectedArr)
 			if(this.selectedArr.length == 3) {
 				let routeUrl = this.$router.resolve({
 				  path: '/different',
@@ -84,14 +83,12 @@
 					message: '至少选择2个系列做对比',
 					duration: 1000
 				})
-			}
-			
-			
+			}	
 		},
 		clearChoose() {
 			this.$router.go(0);
 			this.disable = false;
-			window.sessionStorage.setItem('oneSelected', '')
+			window.localStorage.removeItem('selectArr')
 		},
 		getChooseItem(id,checked) {
 			this.seriesList.forEach((item, index) => {
@@ -129,7 +126,7 @@
 		closeFullScreen(loading) {
 		  loading.close()
 		},
-      getSeries(labelId) {
+     getSeries(labelId) {
 		this.openFullScreen()
         let param = new FormData();
         param.append('id', labelId)
@@ -143,11 +140,7 @@
        if(res.data.data) {
 		 this.closeFullScreen(this.openFullScreen())
          this.seriesList = res.data.data;
-		 this.seriesList.forEach((item, index) => {
-			 item.checked = false
-		 })
        }
-
      },
      gotoDetail(id) {
        let routeUrl = this.$router.resolve({

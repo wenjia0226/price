@@ -41,7 +41,7 @@
     },
     methods: {
       goto(id) {
-        window.sessionStorage.setItem('labelId' ,id);
+        window.localStorage.setItem('labelId' ,id);
       },
       getMenuList(){
         let param = new FormData();

@@ -5,13 +5,22 @@
 			<div class="compare">价格对比</div>
 		</el-col>
 	</el-row>
-	<div  class="imgBox">
-	   <div class="itemBox" v-for="(item, index) in differentList" :key="index">				
-			 <el-image @dblclick="goBack"  :src="item.pic" fit="contain"  style="border-radius: .2rem"></el-image>
-			 <div class="title">{{item.seriesName}}</div>
-	   </div>
+	<div class="swiperWrap">
+	 <div class="box">
+		<div class="conBox" v-for="(item, index) in differentList" style="flex:1;">
+			<div class="titleItem" >{{item.seriesName}}</div>
+			<div class="titleItem" style="background: #00aaff;color: #fff;">{{item.name}}</div>
+			<div class="titleItem" style="background: #bab9bf">{{item.refractive}}</div>
+			<div class="titleItem" style="background: #9ba2ab">{{item.abbe}}</div>
+			<div class="titleItem" style="background: #bab9bf">{{item.film}}</div>
+			<div class="titleItem" style="background: #9ba2ab">{{item.covert}}</div>
+			<div class="titleItem" style="background: #bab9bf">{{item.photometric1}}</div>
+			<div class="titleItem" style="background: #9ba2ab">{{item.addLightBelow}}</div>
+			<div class="titleItem" style="background:  #00aaff;color: #fff;">{{item.customPrice}}</div>
+		</div>
+	 </div>	
 	</div>
-	</div>
+</div>
 </template>
 <script>
 import axios from 'axios'
@@ -52,10 +61,10 @@ export default {
 	getDifferent() {
 	this.openFullScreen()
       let param = new FormData();
-      param.append('one', this.concatNum);
+      param.append('glasses', this.one + ',' + this.two + ','  + this.three);
       axios({
         method: 'post',
-        url: '/lightspace/priceclient/contrast',
+        url: '/lightspace/priceclient/contrastGlasses',
         data:param
        }).then(this.handleGetDiffrentSucc.bind(this)).catch((err) => {console.log(err)})
 	 },
@@ -70,27 +79,27 @@ export default {
 </script>
 
 <style lang='stylus' scoped>
-	.compare {
-		font-size: .3rem
-		font-weight:bold;
-		text-align: center;
-		padding-top: .4rem
-	}
-	.imgBox {
-			display:flex;
-			justify-content: space-around;
-			align-items :center;
-			width: 90%;
-			margin-left: 5vw;
-			margin-top: .4rem;
-		}
-	 .itemBox{
-			text-align: center;
-			flex: 1;
-		}
-	.title{
-		font-size: .2rem;
-		margin: .1rem
-		font-weight: bold;
-	}
+.swiperWrap
+	width: 90vw
+	height: 80vh
+	padding-left: 5%
+	padding-right: 5%
+	padding-top: 10vh
+	background: #fff
+    .box
+	 display: flex
+	 .title
+		font-weight: bold
+		width: 1.8rem
+		text-align: center
+	    .titleItem
+		  margin: .1rem 
+		  background: #EAEAEA
+		  height: .3rem
+		  line-height: .3rem
+		  font-size: 0.18rem
+		  border-radius: .05rem
+	 .conBox
+		font-weight: bold
+		text-align: center
 </style>
