@@ -8,7 +8,6 @@
 		 
 	  </el-row>
     <div class="seriesWrap">
-		
       <div class="itemWrap" v-for="item in seriesList" :key="item.id">			
 			  <el-image @click="gotoDetail(item.id)" class="imgBox"  :src="item.introduce" style="border-radius: .2rem" fit="contain"></el-image>
 		  <div class="title">{{item.name}}</div>
@@ -56,7 +55,9 @@
    },
     methods: {
 		seeDifferent() {
-			console.log(this.selectedArr)
+			if(window.localStorage.getItem('selectArr')) {
+					   this.selectedArr = window.localStorage.getItem('selectArr').split(',');
+			}
 			if(this.selectedArr.length == 3) {
 				let routeUrl = this.$router.resolve({
 				  path: '/different',
