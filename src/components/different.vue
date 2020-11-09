@@ -15,32 +15,40 @@
 			<div class="titleItem" style="background: #9ba2ab">{{item.abbe}}</div>
 			<div class="titleItem" style="background: #bab9bf">{{item.film}}</div>
 			<div class="titleItem" style="background: #9ba2ab">{{item.covert}}</div>
-			<div class="titleItem" style="height: 4rem;background: #bab9bf; flex-direction:row;" >
-				<div class="leftWrap" style="position: relative" :style="{height: 2.5+ item.photometric1[3] + 'rem'}" >
-					<div v-if="item.photometric1.length" style="position: absolute;top: -.2rem;right: 0">{{item.photometric1[0]}}D</div>
-					<div v-if="item.photometric2.length" style="position: absolute;right: 0;top: 0.4rem">{{item.photometric2[0]}}D</div>
-					<div style="position: absolute;right: 0;top: 0.8rem">0.00D</div>
-					<div v-if="item.photometric2.length" style="position: absolute;right: 0" :style="{top: item.photometric2[4] + 'rem'}">{{item.photometric2[2]}}D</div>
-					<div v-if="item.photometric3.length" style="position: absolute;right: 0;" :style="{top: item.photometric3[4] + 'rem'}">{{item.photometric3[2]}}D</div>
-					<div style="position: absolute;right: 0;top: 2.41rem">{{item.benchmark}}D</div>
-					<div v-if="item.photometric1.length" style="position: absolute;right: 0;" :style="{top: 2.4 + item.photometric1[3] + 'rem'}">{{item.photometric1[2]}}D</div>
-				</div>
-				<div class="centerWrap" style="position: relative">
-				<!-- 	参数1 -->
-					<div class="box1"></div>
-					<div style="width: 2rem;border: 0.01rem solid red;position:absolute;top: 1rem"></div>
-					<div class="box2"></div>
-					<div style="width: 2rem;border: 0.01rem dotted red;position:absolute;top:2.5rem"></div>
-					<div class="triangle" :style="{borderTopWidth:item.photometric1[3] + 'rem'}"></div>
-					<!-- 参数二 -->
-					<div v-if="item.photometric2.length" class="twoBox" v-bind:style="{height: item.photometric2[3] + 'rem'}"></div>
-						<!-- 参数三 -->
-					<div v-if="item.photometric3.length" class="threeBox" v-bind:style="{height: item.photometric3[3] + 'rem', top: 0.5 + item.photometric2[3] + 'rem'}"></div>
-					<div v-if="item.photometric2.length" style="position: absolute;left: 0.33rem;top: 0.8rem">{{item.photometric2[1]}}D</div>
-				</div>
-				<div class="leftWrap" style="position: relative" >
+			<div class="titleItem" style="height: 5rem; background: #bab9bf;display: flex; flex-direction: column;justify-content: center;">
+				<div class="topWrap" style="display: flex; flex-direction:row;">
+					<div class="leftWrap" style="position: relative" :style="{height: 2.5+ item.photometric1[3] + 'rem'}" >
+						<div v-if="item.photometric1.length" style="position: absolute;top: -.2rem;right: 0">{{item.photometric1[0]}}D</div>
+						<div v-if="item.photometric2.length" style="position: absolute;right: 0;top: 0.4rem">{{item.photometric2[0]}}D</div>
+						<div style="position: absolute;right: 0;top: 0.8rem">0.00D</div>
+						<div v-if="item.photometric2.length" style="position: absolute;right: 0" :style="{top: item.photometric2[4] + 'rem'}">{{item.photometric2[2]}}D</div>
+						<div v-if="item.photometric3.length" style="position: absolute;right: 0;" :style="{top: item.photometric3[4] + 'rem'}">{{item.photometric3[2]}}D</div>
+						<div style="position: absolute;right: 0;top: 2.41rem">{{item.benchmark}}D</div>
+						<div v-if="item.photometric1.length" style="position: absolute;right: 0;" :style="{top: 2.4 + item.photometric1[3] + 'rem'}">{{item.photometric1[2]}}D</div>
+					</div>
+					<div class="centerWrap" style="position: relative">
+					<!-- 	参数1 -->
+						<div class="box1"></div>
+						<div style="width: 2rem;border: 0.01rem solid red;position:absolute;top: 1rem"></div>
+						<div class="box2"></div>
+						<div style="width: 2rem;border: 0.01rem dotted red;position:absolute;top:2.5rem"></div>
+						<div class="triangle" :style="{borderTopWidth:item.photometric1[3] + 'rem'}"></div>
+						<!-- 参数二 -->
+						<div v-if="item.photometric2.length" class="twoBox" v-bind:style="{height: item.photometric2[3] + 'rem'}"></div>
+							<!-- 参数三 -->
+						<div v-if="item.photometric3.length" class="threeBox" v-bind:style="{height: item.photometric3[3] + 'rem', top: 0.5 + item.photometric2[3] + 'rem'}"></div>
+						<div v-if="item.photometric2.length" style="position: absolute;left: 0.33rem;top: 0.8rem">{{item.photometric2[1]}}D</div>
+					</div>
+					<div class="leftWrap" style="position: relative" >
 						<div v-if="item.photometric1.length" style="position: absolute;left: 0.1rem;top: 0.8rem">{{item.photometric1[1]}}D</div>
-				</div>	
+					</div>
+					
+				</div>
+				<div class="bottomWrap">
+					<div class="des">{{item.sphericalMirror}}</div>
+					<div class="des">{{item.colonoscope}}</div>
+					<div class="des">{{item.onTheSpot}}</div>
+				</div>
 			</div>
 			<div class="titleItem" style="background: #9ba2ab">{{item.addLightBelow}}</div>
 			<div class="titleItem" style="background:  #00aaff;color: #fff;">{{item.customPrice}}</div>
@@ -145,24 +153,23 @@ export default {
 				display: flex
 				font-weight: bold
 				.titleItem
-					margin: 0.1rem 
+					margin: .1rem 
 					background: #EAEAEA
-					height: 0.2rem
-					line-height: 0.2rem
+					height: .2rem
+					line-height: .2rem
 					font-size: 0.15rem
-					border-radius: 0.05rem
+					border-radius: .05rem
 					display: flex
 					flex-direction: column
 					justify-content: center
 					align-items: center
-				.bigTitle
-					height: 4rem
-				 .centerWrap
+				.topWrap
+					.centerWrap
 						display:flex
 						justify-content: center
 						flex-direction: column
 						align-items: center
-					  .box1
+						.box1
 							height: 1rem
 							width: 1rem
 							background: #00aaff
@@ -178,8 +185,24 @@ export default {
 							border-color:  #00aaff transparent transparent  transparent;
 							width: 0px;
 							height: 0px;
+						.des
+							height: 0.2rem
+							line-height: 0.2rem
+							font-size: 0.14rem
 					.leftWrap
 						height: 3.1rem
+						.num
+							height: 1rem
+							padding-top: .75rem
+							box-sizing: border-box
+						.num1
+							height: 1.5rem
+							padding-top: 1.2rem
+							box-sizing: border-box
+						.num2
+							flex: 1
+							padding-top: .5rem
+							box-sizing: border-box
 					.twoBox
 						width: 0.33rem
 						background: red
@@ -191,4 +214,9 @@ export default {
 						 background: red
 						 position: absolute
 						 left: 0
+				.bottomWrap
+					margin-top: 0.1rem
+					.des
+						height: 0.2rem
+						line-height: 0.2rem
 </style>
