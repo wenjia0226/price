@@ -23,14 +23,14 @@
 				<div class="titleItem" style="background: #efefef">{{item.film}}</div>
 				<div class="titleItem" style="background: #c9c9c9">{{item.covert}}</div>
 				<div class="titleItem" style="height: 5rem; background: #bab9bf;display: flex; flex-direction: column;justify-content: center;">
-					<div class="topWrap" style="display: flex; flex-direction:row;line-height: 0.2rem;">
+					<div class="topWrap" style="display: flex; flex-direction:row;justify-content:center;align-items: center;line-height: 0.2rem;">
 						<div class="leftWrap" style="position: relative" :style="{height: 2.5+ item.photometric1[3] + 'rem'}" >
 							<div v-if="item.photometric1.length" style="position: absolute;top: -.2rem;right: 0">{{item.photometric1[0]}}D</div>
 							<!-- 第二个框上半部分 -->
 							<div v-if="item.photometric2[0]< 0" style="position: absolute;right: 0;"
 							 :style="{top: item.photometric2[4] + 'rem'}">{{item.photometric2[0]}}D</div>
-							<div v-if="item.photometric2[0] >=  0"  style="position: absolute;right: 0;"
-							 :style="{top: 1-item.photometric1[5] + 'rem'}">
+							<div v-if="item.photometric2[0] >=  0 && (item.photometric1[0] !== item.photometric2[0])"  style="position: absolute;right: 0;"
+							 :style="{top: 1 -item.photometric1[5] + 'rem'}">
 							 {{item.photometric2[0]}}D
 							 </div>
 							<div style="position: absolute;right: 0;top: 0.8rem">0.00D</div>
@@ -39,11 +39,12 @@
 							:style="{top: item.photometric2[3] + 0.81 + 'rem'}">
 							{{item.photometric2[2]}}D</div>
 							<div v-if="item.photometric2[0] < 0" style="position: absolute;right: 0"
-							:style="{top: item.photometric2[4] + 0.81 + 'rem'}">
+							:style="{top: item.photometric2[3] + item.photometric2[4]- 0.1 + 'rem'}">
 							{{item.photometric2[2]}}D</div>
+							<!-- 第三个框的数据 -->
 							<div v-if="item.photometric3.length && item.photometric2[0] > 0" style="position: absolute;right: 0;" 
 							:style="{top: item.photometric3[4]- 0.1 + 'rem'}">{{item.photometric3[2]}}D</div>
-							<div v-if="item.photometric3.length && item.photometric2[0] <0" style="position: absolute;right: 0;"
+							<div v-if="item.photometric3.length && item.photometric2[0] <=0" style="position: absolute;right: 0;"
 							:style="{top: item.photometric3[4]- 0.1 + 'rem'}">{{item.photometric3[2]}}D</div>
 							<div style="position: absolute;right: 0;top: 2.41rem">{{item.benchmark}}D</div>
 							<div v-if="item.photometric1.length" style="position: absolute;right: 0;" :style="{top: 2.4 + item.photometric1[3] + 'rem'}">{{item.photometric1[2]}}D</div>
@@ -51,24 +52,25 @@
 						<div class="centerWrap" style="position: relative">
 						<!-- 	参数1 -->
 							<div class="box1"></div>
-							<div style="width: 2rem;border: 0.01rem solid red;position:absolute;top: 1rem"></div>
-							<div class="box2" ></div>
+							<div style="width: 2rem;border: 0.01rem dotted red;position:absolute;top: 1rem"></div>
+							<div class="box2"></div>
+							<!-- 基线 -->
 							<div style="width: 2rem;border: 0.01rem dotted red;position:absolute;top:2.5rem"></div>
 							<div class="triangle" :style="{borderTopWidth:item.photometric1[3] + 'rem'}"></div>
 							<!-- 参数二 -->
-							<div class="twoTopBox" v-bind:style="{height: item.photometric1[5] + 'rem', top: 1-item.photometric1[5] + 'rem'}"></div>
+							<div class="twoTopBox"  v-bind:style="{height: item.photometric1[5] + 'rem', top: 1-item.photometric1[5] + 'rem'}"></div>
 							<div v-if="item.photometric2.length" class="twoBox" v-bind:style="{height: item.photometric2[3] + 'rem', top: item.photometric2[4] + 'rem'}"></div>
 								<!-- 参数三 -->
 							<div v-if="item.photometric3.length && item.photometric2[0] > 0" 
 							class="threeBox" v-bind:style="{height: item.photometric3[3] + 'rem', top: 1.01 + item.photometric2[3] + 'rem'}">
 							</div>
 							<!-- 参数三 -->
-							<div v-if="item.photometric3.length && item.photometric2[0] < 0" 
+							<div v-if="item.photometric3.length && item.photometric2[0] <= 0" 
 							class="threeBox" v-bind:style="{height: item.photometric3[3] + 'rem', top: item.photometric3[4] - item.photometric3[3]+ 'rem'}">
 							</div>
 							<div v-if="item.photometric2.length && item.photometric2[0] > 0" 
 							style="position: absolute;left: 0.33rem;top: 0.8rem">{{item.photometric2[1]}}D</div>
-							<div v-if="item.photometric2.length && item.photometric2[0] < 0"
+							<div v-if="item.photometric2.length && item.photometric2[0] <= 0"
 							style="position: absolute;left: 0.33rem;" :style="{top: item.photometric2[4] + 'rem'}">{{item.photometric2[1]}}D</div>
 						</div>
 						<div class="leftWrap" style="position: relative" >
@@ -211,7 +213,7 @@
 							
 							// 三角形的高度
 							if(item.photometric1.length) {
-								 item.photometric1[3] = 0.6* item.photometric1[2] / -15
+								 item.photometric1[3] = 0.6* item.photometric1[2] /item.benchmark 
 							}
 							// 第三个的高度
 							if(item.photometric3.length) {
