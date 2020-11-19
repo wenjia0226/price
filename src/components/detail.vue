@@ -11,9 +11,9 @@
 				<div class="titleItem">膜层</div>
 				<div class="titleItem">隐形标记</div>
 				<div class="titleItem" style="height: 5rem">光度范围</div>
-				<div class="titleItem" v-if="customPrice">现片价</div>
+				<div class="titleItem" v-if="presentPrice">现片价</div>
 				<div class="titleItem" v-if="addLightBelow">下加光</div>
-				<div class="titleItem">定制价</div>
+				<div class="titleItem" v-if="customPrice">定制价</div>
 			</div>
 			<div class="title" v-for="(item, index) in swiperList" style="flex:1;height: 4rem;">
 				<el-checkbox :checked="item.checked" @change="getChooseItem(item.id, item.checked)" :disabled="disable">选择对比</el-checkbox>
@@ -22,7 +22,9 @@
 				<div class="titleItem" style="background:#c9c9c9">{{item.abbe}}</div>
 				<div class="titleItem" style="background: #efefef">{{item.film}}</div>
 				<div class="titleItem" style="background: #c9c9c9">{{item.covert}}</div>
-				<div class="titleItem" style="height: 5rem; background: #bab9bf;display: flex; flex-direction: column;justify-content: center;">
+			<!-- 	嵌套类型 -->
+				<div class="titleItem" v-if="item.photometric1[0] >= 0"
+				 style="height: 5rem; background: #bab9bf;display: flex; flex-direction: column;justify-content: center;">
 					<div class="topWrap" style="display: flex; flex-direction:row;justify-content:center;align-items: center;line-height: 0.2rem;">
 						<div class="leftWrap" style="position: relative" :style="{height: 2.5+ item.photometric1[3] + 'rem'}" >
 							<div v-if="item.photometric1.length" style="position: absolute;top: -.2rem;right: 0">{{item.photometric1[0]}}D</div>
@@ -36,7 +38,7 @@
 							<div style="position: absolute;right: 0;top: 0.8rem">0.00D</div>
 							<!-- 第二个框下半部分 -->
 							<div v-if="item.photometric2[0] >= 0" style="position: absolute;right: 0" 
-							:style="{top: item.photometric2[3] + 0.81 + 'rem'}">
+							:style="{top: item.photometric2[3] + 0.9 + 'rem'}">
 							{{item.photometric2[2]}}D</div>
 							<div v-if="item.photometric2[0] < 0" style="position: absolute;right: 0"
 							:style="{top: item.photometric2[3] + item.photometric2[4]- 0.1 + 'rem'}">
@@ -46,7 +48,7 @@
 							:style="{top: item.photometric3[4]- 0.1 + 'rem'}">{{item.photometric3[2]}}D</div>
 							<div v-if="item.photometric3.length && item.photometric2[0] <=0" style="position: absolute;right: 0;"
 							:style="{top: item.photometric3[4]- 0.1 + 'rem'}">{{item.photometric3[2]}}D</div>
-							<div style="position: absolute;right: 0;top: 2.41rem">{{item.benchmark}}D</div>
+							<div style="position: absolute;right: 0;top:2.41rem">{{item.benchmark}}D</div>
 							<div v-if="item.photometric1.length" style="position: absolute;right: 0;" :style="{top: 2.4 + item.photometric1[3] + 'rem'}">{{item.photometric1[2]}}D</div>
 						</div>
 						<div class="centerWrap" style="position: relative">
@@ -73,7 +75,7 @@
 							<div v-if="item.photometric2.length && item.photometric2[0] <= 0"
 							style="position: absolute;left: 0.33rem;" :style="{top: item.photometric2[4] + 'rem'}">{{item.photometric2[1]}}D</div>
 						</div>
-						<div class="leftWrap" style="position: relative" >
+						<div class="leftWrap" style="position: relative" :style="{height: 2.5+ item.photometric1[3] + 'rem'}">
 							<div v-if="item.photometric1.length" style="position: absolute;left: 0.1rem;top: 0.8rem">{{item.photometric1[1]}}D</div>
 						</div>
 						
@@ -84,8 +86,65 @@
 						<div class="des">{{item.onTheSpot}}</div>
 					</div>
 				</div>
-				<div class="titleItem" style="background: #66c6e9">{{item.presentPrice}} </div>	
-				<div class="titleItem" v-if="item.addLightBelow" style="background: #66c6e9">{{item.addLightBelow}}</div>
+				<div class="titleItemSecond" v-if="item.photometric1[0] < 0"
+				 style="height: 5rem; background: #bab9bf;">
+					<div class="twoLeftWrap"  style="position: relative; width: 50px;" :style="{height: item.photometric1[4] + 'rem'}">
+						<div style="position: absolute;right:3px; top: -0.10rem"  
+						 v-if="item.photometric2.length"> {{item.photometric2[2]}}</div>
+						<div style="position: absolute;right:3px;" :style="{top: item.photometric2[3]- 0.1 + 'rem'}"   
+						v-if="item.photometric1.length"> {{item.photometric1[0]}}</div>
+						<div style="position: absolute;right:3px;" :style="{top: item.photometric1[3] + item.photometric2[3] - 0.1 + 'rem'}"   
+						v-if="item.photometric1.length && item.photometric2.length"> {{item.photometric1[2]}}</div>
+						<div style="position: absolute;right:3px;" :style="{top: item.photometric1[3] - 0.1 + 'rem'}"
+						v-if="item.photometric1.length && item.photometric3.length && !item.photometric2.length"> 
+						{{item.photometric1[2]}}</div>
+						<div style="position: absolute;right:3px;" :style="{top: item.photometric1[3] - 0.1 + 'rem'}"
+						v-if="item.photometric1.length && !item.photometric3.length && !item.photometric2.length"> 
+						{{item.photometric1[2]}}</div>
+						<div style="position: absolute;right:3px;" 
+						:style="{top: item.photometric1[3] + item.photometric2[3] + item.photometric3[3] - 0.1 + 'rem'}"
+						v-if="item.photometric1.length && item.photometric2.length && item.photometric3.length"> 
+						{{item.photometric3[0]}}</div>
+						<div style="position: absolute;right:3px;" 
+						:style="{top: item.photometric1[3] + item.photometric3[3]- 0.1 + 'rem'}"  
+							v-if="item.photometric1.length && item.photometric3.length && !item.photometric2.length">
+						{{item.photometric3[0]}}</div>
+					</div>
+					<div class="secondCenterWrap" style="position: relative">
+						<div class="smBox1" v-if="item.shape2 == 1 && item.photometric2.length"></div> <!-- 矩形：1 三角形：2 上梯形：3 下梯形：4 -->
+						<div class="secondTrigger" v-if="item.shape2 == 2 && item.photometric2.length"></div>
+						<div class="mask1" v-if="item.shape2 == 3 && item.photometric2.length"></div>
+						<div class="mask2" v-if="item.shape2 == 4 && item.photometric2.length"></div>
+						<div style="border: 1px solid #fff"></div>
+						<div class="secondBox1" v-if="item.shape1 == 1 && item.photometric1.length"></div> <!-- 矩形：1 三角形：2 上梯形：3 下梯形：4 -->
+						<div class="secondTrigger" v-if="item.shape1 == 2 && item.photometric1.length"></div>
+						<div class="mask1" v-if="item.shape1 == 3 && item.photometric1.length"></div>
+						<div class="mask2" v-if="item.shape1 == 4 && item.photometric1.length"></div>
+				
+						<div style="border: 1px solid #fff"></div>
+						<div class="secondBox1" v-if="item.shape3== 1 && item.photometric3.length"></div> <!-- 矩形：1 三角形：2 上梯形：3 下梯形：4 -->
+						<div class="secondTrigger" v-if="item.shape3 == 2 && item.photometric3.length"></div>
+						<div class="mask1" v-if="item.shape3 == 3 && item.photometric3.length"></div>
+						<div class="mask2" v-if="item.shape3 == 4 && item.photometric3.length"></div>
+						<div class="secondBox1" v-if="item.shape4 == 1 && item.photometric4.length"></div> <!-- 矩形：1 三角形：2 上梯形：3 下梯形：4 -->
+						<div class="secondTrigger" v-if="item.shape4 == 2 && item.photometric4.length"></div>
+						<div class="mask1" v-if="item.shape4 == 3 && item.photometric4.length"></div>
+						<div class="mask2" v-if="item.shape4 == 4 && item.photometric4.length"></div>
+					</div>
+					<div class="twoLeftWrap"  style="position: relative; width: 50px;" :style="{height: item.photometric1[4] + 'rem'}">
+						<div style="position: absolute;left:3px;" :style="{top: item.photometric1[3] + item.photometric2[3] - 0.1 + 'rem'}"
+						v-if="item.photometric1.length && item.photometric2.length"> 
+						{{item.photometric1[1]}}</div>
+						<div style="position: absolute;left:3px;" :style="{top: item.photometric1[3] - 0.1 + 'rem'}"
+						v-if="item.photometric1.length && item.photometric3.length && !item.photometric2.length">
+						{{item.photometric1[1]}}</div>
+						<div style="position: absolute;left:3px;" :style="{top: item.photometric1[3] - 0.1 + 'rem'}"
+						v-if="item.photometric1.length && !item.photometric3.length && !item.photometric2.length">
+						{{item.photometric1[1]}}</div>
+					</div>
+				</div>
+				<div class="titleItem" v-if="item.presentPrice"style="background: #66c6e9">{{item.presentPrice}} </div>	
+				<div class="titleItem" v-if="item.addLightBelow" style="background: #66c6e9">{{item.addLightBelow}}D</div>
 				<div class="titleItem" v-if="item.customPrice" style="background: #66c6e9">{{item.customPrice}}</div>
 			</div>
 		 </div>	
@@ -130,7 +189,9 @@
 					bannerW: 0,
 					selectedArr: [],
 					addLightBelow: false,
-					customPrice: false
+					customPrice: false,
+					presentPrice: false,
+					totalHeight: ''
           }
         },
       methods: {
@@ -196,31 +257,81 @@
 							if(item.customPrice) {
 								this.customPrice = true
 							}
+							if(item.presentPrice) {
+								this.presentPrice = true
+							}
 							//上面的高度 动态
-							if(item.photometric1.length) {
-								item.photometric1[5] = item.photometric2[0] * 1 /  item.photometric1[0]; // 第二个方块的高度
-							}
-							if(item.photometric2.length) { 
-								// 第二个广度范围下负数 广度范围
-								if(item.photometric2[0] > 0) {
-								item.photometric2[3] = 1.5 * item.photometric2[2] / item.benchmark;  //高度
-								item.photometric2[4] = 1.01; // 距离顶部距离
-								}else {
-									item.photometric2[3] = 1.5 * (item.photometric2[2] - item.photometric2[0])/ item.benchmark;  //高度
-									item.photometric2[4] = 1.5 * item.photometric2[0] / item.benchmark + 1.01; //  第二个光度范围下半部分矩形
+							if(item.photometric1[0] > 0) {
+								if(item.photometric1.length) {
+									item.photometric1[5] = item.photometric2[0] * 1 /  item.photometric1[0]; // 第二个方块的高度
 								}
-							}
-							
-							// 三角形的高度
-							if(item.photometric1.length) {
-								 item.photometric1[3] = 0.6* item.photometric1[2] /item.benchmark 
-							}
-							// 第三个的高度
-							if(item.photometric3.length) {
-								item.photometric3[3] =  1.5 * (item.photometric3[2] - item.photometric3[0])  / item.benchmark //第三个的高度
-								item.photometric3[4] = 1.5 * item.photometric3[2]  / item.benchmark + 1.01;
-							}
+								if(item.photometric2.length) { 
+									// 第二个广度范围下负数 广度范围
+									if(item.photometric2[0] > 0) {
+									item.photometric2[3] = 1.5 * item.photometric2[2] / item.benchmark;  //高度
+									item.photometric2[4] = 1.01; // 距离顶部距离
+									}else {
+										item.photometric2[3] = 1.5 * (item.photometric2[2] - item.photometric2[0])/ item.benchmark;  //高度
+										item.photometric2[4] = 1.5 * item.photometric2[0] / item.benchmark + 1.01; //  第二个光度范围下半部分矩形
+									}
+								}
+								
+								// 三角形的高度
+								if(item.photometric1.length) {
+									 item.photometric1[3] = 0.6* item.photometric1[2] /item.benchmark 
+								}
+								// 第三个的高度
+								if(item.photometric3.length) {
+									item.photometric3[3] =  1.5 * (item.photometric3[2] - item.photometric3[0])  / item.benchmark //第三个的高度
+									item.photometric3[4] = 1.5 * item.photometric3[2]  / item.benchmark + 1.01;
+								}
+							} else {  //如果第一个广度范围小于0 重新开始计算图形计其位置
+								if(item.photometric1.length) {
+									if(item.shape1 == 1) {
+										item.photometric1[3] =   1; //photometric1[3] 高度
+									}else if(item.shape1 == 2) {
+										item.photometric1[3] = 0.5
+									}	
+								}
+								if(item.photometric2.length) {
+									if(item.shape2 == 1) {
+										item.photometric2[3] =   1;  //photometric1[3] 高度
+									}else if(item.shape2 == 2) {
+										item.photometric2[3] = 0.5
+									}else {
+										item.photometric2[3] = 0.33
+									}	
+								}
+								if(item.photometric3.length) {
+									if(item.shape3 == 1) {
+										item.photometric3[3] = 1;  //photometric1[3] 高度
+									}else if(item.shape3 == 2) {
+										item.photometric3[3] = 0.5
+									}else{
+										item.photometric3[3] = 0.33
+									}	
+								}
+								if(item.photometric4.length) {
+									if(item.shape3 == 1) {
+										item.photometric3[3] = 1;  //photometric1[3] 高度
+									}else if(item.shape3 == 2) {
+										item.photometric3[3] = 0.5
+									}else{
+										item.photometric3[3] = 0.33
+									}	
+								}
+								if(item.photometric1.length && item.photometric2.length && item.photometric3.length) {
+									item.photometric1[4] = item.photometric1[3] + item.photometric2[3] + item.photometric3[3];
+								}else if(item.photometric1.length && item.photometric2.length ) {
+									item.photometric1[4] = item.photometric1[3] + item.photometric2[3]
+								}else if(item.photometric1.length && item.photometric3.length) {
+									item.photometric1[4] = item.photometric1[3] + item.photometric3[3];
+								}else if(item.photometric1.length && !item.photometric3.length && !item.photometric2.length) {
+									item.photometric1[4] = item.photometric1[3] ;
+								}
+								}
 							})
+							
           }		
         }
       }
@@ -243,15 +354,15 @@
 				.titleItem
 					margin: .1rem 
 					background: #e5e5e5
-					height: 0.3rem
-					line-height: 0.3rem
+					height: 0.2rem
+					line-height: 0.2rem
 					font-size: 0.15rem
 					border-radius: .05rem
 					display: flex
 					flex-direction: column
 					justify-content: center
 					align-items: center
-				.topWrap
+				  .topWrap
 					.centerWrap
 						display:flex
 						justify-content: center
@@ -277,8 +388,7 @@
 							height: 0.2rem
 							line-height: 0.2rem
 							font-size: 0.14rem
-					.leftWrap
-						height: 3.1rem
+					 .leftWrap
 						.num
 							height: 1rem
 							padding-top: .75rem
@@ -307,9 +417,48 @@
 						 background: #00b8ec
 						 position: absolute
 						 left: 0
-			  .bottomWrap
-					margin-top: 0.1rem
-					.des
-						height: 0.2rem
-						line-height: 0.2rem
+			    .bottomWrap
+						margin-top: 0.1rem
+						.des
+							height: 0.2rem
+							line-height: 0.2rem
+				.titleItemSecond
+					margin: .1rem
+					background: #e5e5e5
+					height: 0.2rem
+					line-height: 0.2rem
+					font-size: 0.15rem
+					border-radius: .05rem
+					display: flex
+					justify-content: center
+					align-items: center
+					.secondCenterWrap
+						.secondBox1
+							width: 1rem
+							height: 1rem
+							background: #00b8ec
+						.secondBox2
+							width: 1rem
+							height: 0.8rem
+							background: #00b8ec;
+						.smBox1
+							width: 0.3rem
+							height: 1rem;
+							background: #00b8ec;
+						.secondTrigger
+							border-style: solid;
+							border-width: 0px 100px 50px 0;
+							border-color:transparent transparent #00b8ec;
+							width: 0px;
+							height: 0px;
+						.mask1
+							width: 63px;
+							height: 0;
+							border-top: 33px solid #00b8ec;
+							border-right: 37px solid transparent;
+						.mask2
+							width: 63px;
+							height: 0;
+							border-bottom: 33px solid #00b8ec;
+							border-right: 37px solid transparent; 
 </style>
