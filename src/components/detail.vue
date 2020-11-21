@@ -23,7 +23,7 @@
 				<div class="titleItem" style="background: #efefef">{{item.film}}</div>
 				<div class="titleItem" style="background: #c9c9c9">{{item.covert}}</div>
 			<!-- 	嵌套类型 -->
-				<div class="titleItem" v-if="item.photometric1[0] >= 0"
+				<div class="titleItem" v-if="item.photometric1[0] >= 0 && item.photometric1[2] < 0 "
 				 style="height: 5rem; background: #bab9bf;display: flex; flex-direction: column;justify-content: center;">
 					<div class="topWrap" style="display: flex; flex-direction:row;justify-content:center;align-items: center;line-height: 0.2rem;">
 						<div class="leftWrap" style="position: relative" :style="{height: 2.5+ item.photometric1[3] + 'rem'}" >
@@ -53,14 +53,15 @@
 						</div>
 						<div class="centerWrap" style="position: relative">
 						<!-- 	参数1 -->
-							<div class="box1"></div>
+							<div class="box1" :style="{background: item.photometric2.length? '#a2daee': '#00b8ec'}"></div>
 							<div style="width: 2rem;border: 0.01rem dotted red;position:absolute;top: 1rem"></div>
-							<div class="box2"></div>
+							<div class="box2"  :style="{background: item.photometric2.length? '#a2daee': '#00b8ec'}"></div>
 							<!-- 基线 -->
 							<div style="width: 2rem;border: 0.01rem dotted red;position:absolute;top:2.5rem"></div>
-							<div class="triangle" :style="{borderTopWidth:item.photometric1[3] + 'rem'}"></div>
+							<div class="triangle" :style="{borderTopWidth:item.photometric1[3] + 'rem',
+							borderTopColor: item.photometric2.length ? '#a2daee': '#00b8ec' }" style="borderTopColor:#00b8ec"></div>
 							<!-- 参数二 -->
-							<div class="twoTopBox"  v-bind:style="{height: item.photometric1[5] + 'rem', top: 1-item.photometric1[5] + 'rem'}"></div>
+							<div class="twoTopBox"  :style="{height: item.photometric1[5] + 'rem', top: 1-item.photometric1[5] + 'rem'}"></div>
 							<div v-if="item.photometric2.length" class="twoBox" v-bind:style="{height: item.photometric2[3] + 'rem', top: item.photometric2[4] + 'rem'}"></div>
 								<!-- 参数三 -->
 							<div v-if="item.photometric3.length && item.photometric2[0] > 0" 
@@ -143,6 +144,18 @@
 						{{item.photometric1[1]}}</div>
 					</div>
 				</div>
+				<div class="titleItemThird" v-if="item.photometric1[0] >= 0 && item.photometric1[2] > 0">
+					<div class="thirdLeft"  style="position: relative; width: 0.5rem;height: 2.5rem">
+						<div style="position: absolute; top: -0.1rem;right: 0.03rem">{{item.photometric1[2]}}D</div>
+						<div style="position: absolute; top: 2.4rem;right: 0.03rem">{{item.photometric1[0]}}D</div>
+					</div>
+					<div class="thirdCenter">
+						<div class="thirdBox"></div>
+					</div>
+					<div class="thirdRight"  style="position: relative; width: 0.5rem;height: 2.5rem">
+							<div style="position: absolute; top: -0.1rem;left: 0.03rem">{{item.photometric1[1]}}D</div>
+					</div>
+				</div>
 				<div class="titleItem" v-if="item.presentPrice"style="background: #66c6e9">{{item.presentPrice}} </div>	
 				<div class="titleItem" v-if="item.addLightBelow" style="background: #66c6e9">{{item.addLightBelow}}D</div>
 				<div class="titleItem" v-if="item.customPrice" style="background: #66c6e9">{{item.customPrice}}</div>
@@ -191,7 +204,6 @@
 					addLightBelow: false,
 					customPrice: false,
 					presentPrice: false,
-					totalHeight: ''
           }
         },
       methods: {
@@ -330,12 +342,11 @@
 									item.photometric1[4] = item.photometric1[3] ;
 								}
 								}
-							})
-							
+							})		
           }		
         }
-      }
-      }
+    }
+  }
 </script>
 <style lang="stylus"  scoped>
 .swiperWrap
@@ -381,7 +392,10 @@
 							border-right-width: 1rem;
 							border-bottom-width: 0;
 							border-left-width: 0;
-							border-color: #a2daee transparent transparent  transparent;
+							border-right-color: transparent;
+							border-bottom-color: transparent;
+							border-left-color: transparent;
+							// border-color: #a2daee transparent transparent  transparent;
 							width: 0px;
 							height: 0px;
 						.des
@@ -461,4 +475,19 @@
 							height: 0;
 							border-bottom: 33px solid #00b8ec;
 							border-right: 37px solid transparent; 
+				.titleItemThird
+					margin: .1rem
+					background: #e5e5e5
+					height: 5rem
+					line-height: 0.2rem
+					font-size: 0.15rem
+					border-radius: .05rem
+					display: flex
+					justify-content: center
+					align-items: center
+				 .thirdCenter
+					 .thirdBox
+							height: 2.5rem
+							width: 1rem
+							background: #00b8ec
 </style>
