@@ -1,11 +1,14 @@
 <template>
 <div>
 	<el-row>
-		<el-col :span="6" :offset="9" >
+		<el-col :span="2" >
+		<el-button  type="primary"  @click="goBack" style="margin: .2rem ">返回</el-button>
+		</el-col>
+		<el-col :span="6" :offset="7" >
 			<div style="text-align: center;margin-top: .3rem" >价格对比</div>
 		</el-col>
 	</el-row>
-	<div class="swiperWrap">
+	<div class="swiperWrap"  @dblclick="goBack">
 	 <div class="box">
 		<div class="title">
 			<div class="titleItem">所属标签</div>

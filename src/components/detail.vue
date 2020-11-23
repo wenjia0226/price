@@ -1,7 +1,7 @@
 <template>
   <div>
 	  <el-button  type="primary"  @click="goBack" style="margin: .2rem ">返回</el-button>
-    <div class="swiperWrap">
+    <div class="swiperWrap" @dblclick="goBack">
 		 <div class="box">
 			<div class="title">
 				<div style="height: .29rem"></div>
