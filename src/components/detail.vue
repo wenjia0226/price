@@ -8,20 +8,24 @@
 				<div class="titleItem">产品名称</div>
 				<div class="titleItem">折射率</div>
 				<div class="titleItem">阿贝数</div>
-				<div class="titleItem">膜层</div>
-				<div class="titleItem">隐形标记</div>
+				<div class="titleItem" v-if="film">膜层</div>
+				<div class="titleItem" v-if="covert">隐形标记</div>
 				<div class="titleItem" style="height: 5rem">光度范围</div>
+				<div class="titleItem" v-if="passageway">通道</div>
 				<div class="titleItem" v-if="presentPrice">现片价</div>
 				<div class="titleItem" v-if="addLightBelow">下加光</div>
 				<div class="titleItem" v-if="customPrice">定制价</div>
+				<div class="titleItem" v-if="polarizing">偏光价</div>
+				<div class="titleItem" v-if="pricepol">偏光定制价</div>
+				<div class="titleItem" v-if="bluray">蓝光片价</div>
 			</div>
 			<div class="title" v-for="(item, index) in swiperList" style="flex:1;height: 4rem;">
 				<el-checkbox :checked="item.checked" @change="getChooseItem(item.id, item.checked)" :disabled="disable">选择对比</el-checkbox>
 				<div class="titleItem" style="background: #00b9ed;color: #fff;">{{item.name}}</div>
 				<div class="titleItem" style="background: #efefef">{{item.refractive}}</div>
 				<div class="titleItem" style="background:#c9c9c9">{{item.abbe}}</div>
-				<div class="titleItem" style="background: #efefef">{{item.film}}</div>
-				<div class="titleItem" style="background: #c9c9c9">{{item.covert}}</div>
+				<div class="titleItem" style="background: #efefef" v-if="film">{{item.film}}</div>
+				<div class="titleItem" style="background: #c9c9c9" v-if="covert">{{item.covert}}</div>
 			<!-- 	嵌套类型 -->
 				<div class="titleItem" v-if="item.photometric1[0] >= 0 && item.photometric1[2] < 0 "
 				 style="height: 5rem; background: #bab9bf;display: flex; flex-direction: column;justify-content: center;">
@@ -156,9 +160,13 @@
 							<div style="position: absolute; top: -0.1rem;left: 0.03rem">{{item.photometric1[1]}}D</div>
 					</div>
 				</div>
+				<div class="titleItem" v-if="passageway">{{item.passageway}}</div>
 				<div class="titleItem" v-if="item.presentPrice"style="background: #66c6e9">{{item.presentPrice}} </div>	
-				<div class="titleItem" v-if="item.addLightBelow" style="background: #66c6e9">{{item.addLightBelow}}D</div>
+				<div class="titleItem" v-if="item.addLightBelow">{{item.addLightBelow}}D</div>
 				<div class="titleItem" v-if="item.customPrice" style="background: #66c6e9">{{item.customPrice}}</div>
+				<div class="titleItem" v-if="polarizing" style="background: #66c6e9">{{item.polarizing}}</div>
+				<div class="titleItem" v-if="pricepol" style="background: #66c6e9">{{item.pricepol}}</div>
+				<div class="titleItem" v-if="bluray" style="background: #66c6e9">{{item.bluray}}</div>
 			</div>
 		 </div>	
     </div>
@@ -204,6 +212,12 @@
 					addLightBelow: false,
 					customPrice: false,
 					presentPrice: false,
+					polarizing: false,
+					passageway: false,
+					pricepol: false,
+					bluray: false,
+					film: false,
+					covert: false
           }
         },
       methods: {
@@ -263,6 +277,12 @@
           if(res.data.status == 200) {
             this.swiperList = res.data.data;
 						this.swiperList.forEach((item, index) => {
+							if(item.film) {
+									this.film = true
+							}
+							if(item.covert) {
+									this.covert = true
+							}
 							if(item.addLightBelow) {
 								this.addLightBelow = true
 							} 
@@ -271,6 +291,18 @@
 							}
 							if(item.presentPrice) {
 								this.presentPrice = true
+							}
+							if(item.polarizing) {
+								this.polarizing = true
+							}
+							if(item.passageway) {
+								this.passageway = true
+							}
+							if(item.pricepol) {
+								this.pricepol = true
+							}
+							if(item.bluray) {
+								this.bluray = true
 							}
 							//上面的高度 动态
 							if(item.photometric1[0] > 0) {
@@ -373,6 +405,8 @@
 					flex-direction: column
 					justify-content: center
 					align-items: center
+					padding: 0.2rem
+					box-sizing: border-box
 				  .topWrap
 					.centerWrap
 						display:flex

@@ -19,9 +19,13 @@
 		 	<div class="titleItem">膜层</div>
 		 	<div class="titleItem">隐形标记</div>
 		 	<div class="titleItem" style="height: 5rem">光度范围</div>
-		 	<div class="titleItem" v-if="customPrice">现片价</div>
-		 	<div class="titleItem" v-if="addLightBelow">下加光</div>
-		 	<div class="titleItem">定制价</div>
+		 <div class="titleItem" >通道</div>
+		 <div class="titleItem" >现片价</div>
+		 <div class="titleItem" >下加光</div>
+		 <div class="titleItem" >定制价</div>
+		 <div class="titleItem" >偏光价</div>
+		 <div class="titleItem" >偏光定制价</div>
+		 <div class="titleItem" >蓝光片价</div>
 		</div>
 		<div class="conBox" v-for="(item, index) in differentList">
 			<div class="titleItem" style="background: #00b9ed;color: #fff;">{{item.labelName}}</div>
@@ -165,9 +169,13 @@
 						<div style="position: absolute; top: -0.1rem;left: 0.03rem">{{item.photometric1[1]}}D</div>
 				</div>
 			</div>
-			<div class="titleItem" v-if="item.presentPrice"style="background: #66c6e9">{{item.presentPrice}} </div>
-			<div class="titleItem" v-if="item.addLightBelow" style="background: #66c6e9">{{item.addLightBelow}}D</div>
-			<div class="titleItem" v-if="item.customPrice" style="background: #66c6e9">{{item.customPrice}}</div>
+			<div class="titleItem" >{{item.passageway}}</div>
+			<div class="titleItem"style="background: #66c6e9">{{item.presentPrice}} </div>	
+			<div class="titleItem" >{{item.addLightBelow}}</div>
+			<div class="titleItem" style="background: #66c6e9">{{item.customPrice}}</div>
+			<div class="titleItem" style="background: #66c6e9">{{item.polarizing}}</div>
+			<div class="titleItem" style="background: #66c6e9">{{item.pricepol}}</div>
+			<div class="titleItem" style="background: #66c6e9">{{item.bluray}}</div>
 		</div>
 	 </div>	
 	</div>
@@ -196,6 +204,12 @@ export default {
 			 addLightBelow: false,
 			 customPrice: false,
 			 presentPrice: false,
+			 polarizing: false,
+			 passageway: false,
+			 pricepol: false,
+			 bluray: false,
+			 film: false,
+			 covert: false
 	   }
    },
    methods: {
@@ -230,14 +244,32 @@ export default {
 		if(res.data.status == 200) {
 		    this.differentList = res.data.data;
 				this.differentList.forEach((item, index) => {
-					if(item.addLightBelow) {
-						this.addLightBelow = true
-					} 
-					if(item.customPrice) {
-						this.customPrice = true
+					if(!item.film) {
+							item.film = '无'
 					}
-					if(item.presentPrice) {
-						this.presentPrice = true
+					if(!item.covert) {
+							item.covert = '无'
+					}
+					if(!item.addLightBelow) {
+						item.addLightBelow = '无'
+					} 
+					if(!item.customPrice) {
+						item.customPrice = '无'
+					}
+					if(!item.presentPrice) {
+						item.presentPrice = '无'
+					}
+					if(!item.polarizing) {
+						item.polarizing = '无'
+					}
+					if(!item.passageway) {
+						item.passageway = '无'
+					}
+					if(!item.pricepol) {
+						item.pricepol = '无'
+					}
+					if(!item.bluray) {
+						item.bluray = '无'
 					}
 					//上面的高度 动态
 					if(item.photometric1[0] > 0) {
@@ -344,6 +376,8 @@ export default {
 						flex-direction: column
 						justify-content: center
 						align-items: center
+						padding: 0.2rem
+						box-sizing: border-box
 						.topWrap
 						 .centerWrap
 								display:flex

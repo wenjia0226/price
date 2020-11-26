@@ -1,11 +1,12 @@
 <template>
   <div>
-	  <el-row style="margin-bottom: .2rem">
-		  <el-col :span="6" :offset="18">
-			  <el-button type="primary" size="mini" @click="seeDifferent">查看对比</el-button>
-			  <el-button type="success" size="mini"@click="clearChoose">清空选项</el-button>
+	  <el-row style="margin-bottom: .2rem" :gutter="20">
+		  <el-col :span="2" :offset="20">
+			  <el-button type="success" size="mini" @click="clearChoose">清空选项</el-button>
 		  </el-col>
-		 
+		 <el-col :span="2" >
+			  <el-button type="primary" size="mini" @click="seeDifferent">查看对比</el-button>
+		 </el-col>
 	  </el-row>
     <div class="seriesWrap">
       <div class="itemWrap" v-for="item in seriesList" :key="item.id">			

@@ -12,7 +12,7 @@
 				 :unique-opened="true"
 				 :collapse="isCollapse"
 				 :collapse-transition="false" >
-               <!-- <div class="toggle-button" @click="toggleCollapse"> |||</div> -->
+               <div class="toggle-button" @click="toggleCollapse"> |||</div>
                <el-menu-item :index="'/'+ item.path"   v-for="item in menuList" :key="item.id" @click="saveNavState(item.id, '/' + item.path)">
                  <i class="el-icon-set-up"></i>
                  <span slot="title">{{item.name}}</span>
