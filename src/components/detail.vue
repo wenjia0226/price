@@ -12,9 +12,9 @@
 				<div class="titleItem" v-if="covert">隐形标记</div>
 				<div class="titleItem" style="height: 5rem">光度范围</div>
 				<div class="titleItem" v-if="passageway">通道</div>
-				<div class="titleItem" v-if="presentPrice">现片价</div>
 				<div class="titleItem" v-if="addLightBelow">下加光</div>
-				<div class="titleItem" v-if="customPrice">定制价</div>
+				<div class="titleItem" v-if="presentPrice">现片价</div>
+			  <div class="titleItem" v-if="customPrice">定制价</div>
 				<div class="titleItem" v-if="polarizing">偏光价</div>
 				<div class="titleItem" v-if="pricepol">偏光定制价</div>
 				<div class="titleItem" v-if="bluray">蓝光片价</div>
@@ -35,7 +35,7 @@
 							<!-- 第二个框上半部分 -->
 							<div v-if="item.photometric2[0]< 0" style="position: absolute;right: 0;"
 							 :style="{top: item.photometric2[4] + 'rem'}">{{item.photometric2[0]}}D</div>
-							<div v-if="item.photometric2[0] >=  0 && (item.photometric1[0] !== item.photometric2[0])"  style="position: absolute;right: 0;"
+							<div v-if="item.photometric2[0] >  0 && (item.photometric1[0] !== item.photometric2[0])"  style="position: absolute;right: 0;"
 							 :style="{top: 1 -item.photometric1[5] + 'rem'}">
 							 {{item.photometric2[0]}}D
 							 </div>
@@ -75,9 +75,10 @@
 							<div v-if="item.photometric3.length && item.photometric2[0] <= 0" 
 							class="threeBox" v-bind:style="{height: item.photometric3[3] + 'rem', top: item.photometric3[4] - item.photometric3[3]+ 'rem'}">
 							</div>
-							<div v-if="item.photometric2.length && item.photometric2[0] > 0" 
+							<div v-if="item.photometric2.length && item.photometric2[0] >= 0" 
 							style="position: absolute;left: 0.33rem;top: 0.8rem">{{item.photometric2[1]}}D</div>
-							<div v-if="item.photometric2.length && item.photometric2[0] <= 0"
+							
+							<div v-if="item.photometric2.length && item.photometric2[0] < 0"
 							style="position: absolute;left: 0.33rem;" :style="{top: item.photometric2[4] + 'rem'}">{{item.photometric2[1]}}D</div>
 						</div>
 						<div class="leftWrap" style="position: relative" :style="{height: 2.5+ item.photometric1[3] + 'rem'}">
@@ -161,8 +162,8 @@
 					</div>
 				</div>
 				<div class="titleItem" v-if="passageway">{{item.passageway}}</div>
-				<div class="titleItem" v-if="item.presentPrice"style="background: #66c6e9">{{item.presentPrice}} </div>	
 				<div class="titleItem" v-if="item.addLightBelow">{{item.addLightBelow}}D</div>
+				<div class="titleItem" v-if="item.presentPrice"style="background: #66c6e9">{{item.presentPrice}} </div>	
 				<div class="titleItem" v-if="item.customPrice" style="background: #66c6e9">{{item.customPrice}}</div>
 				<div class="titleItem" v-if="polarizing" style="background: #66c6e9">{{item.polarizing}}</div>
 				<div class="titleItem" v-if="pricepol" style="background: #66c6e9">{{item.pricepol}}</div>
