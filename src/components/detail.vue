@@ -19,7 +19,7 @@
 				<div class="titleItem" v-if="pricepol">偏光定制价</div>
 				<div class="titleItem" v-if="bluray">蓝光片价</div>
 			</div>
-			<div class="title" v-for="(item, index) in swiperList" style="flex:1;height: 4rem;">
+			<div class="title" v-for="(item, index) in swiperList.slice(0,4)" style="flex:1;height: 4rem;">
 				<el-checkbox :checked="item.checked" @change="getChooseItem(item.id, item.checked)" :disabled="disable">选择对比</el-checkbox>
 				<div class="titleItem" style="background: #00b9ed;color: #fff;">{{item.name}}</div>
 				<div class="titleItem" style="background: #efefef">{{item.refractive}}</div>
@@ -31,7 +31,7 @@
 				 style="height: 5rem; background: #bab9bf;display: flex; flex-direction: column;justify-content: center;">
 					<div class="topWrap" style="display: flex; flex-direction:row;justify-content:center;align-items: center;line-height: 0.2rem;">
 						<div class="leftWrap" style="position: relative" :style="{height: 2.5+ item.photometric1[3] + 'rem'}" >
-							<div v-if="item.photometric1.length" style="position: absolute;top: -.2rem;right: 0">{{item.photometric1[0]}}D</div>
+							<div v-if="item.photometric1.length" style="position: absolute;top: -0.1rem;right: 0">{{item.photometric1[0]}}D</div>
 							<!-- 第二个框上半部分 -->
 							<div v-if="item.photometric2[0]< 0" style="position: absolute;right: 0;"
 							 :style="{top: item.photometric2[4] + 'rem'}">{{item.photometric2[0]}}D</div>
@@ -58,10 +58,10 @@
 						<div class="centerWrap" style="position: relative">
 						<!-- 	参数1 -->
 							<div class="box1" :style="{background: item.photometric2.length? '#a2daee': '#00b8ec'}"></div>
-							<div style="width: 2rem;border: 0.01rem dotted red;position:absolute;top: 1rem"></div>
+							<div style="width: 1.2rem;border: 0.01rem solid red;position:absolute;top: 1rem"></div>
 							<div class="box2"  :style="{background: item.photometric2.length? '#a2daee': '#00b8ec'}"></div>
 							<!-- 基线 -->
-							<div style="width: 2rem;border: 0.01rem dotted red;position:absolute;top:2.5rem"></div>
+							<div style="width: 1rem;border: 0.01rem dotted red;position:absolute;top:2.5rem"></div>
 							<div class="triangle" :style="{borderTopWidth:item.photometric1[3] + 'rem',
 							borderTopColor: item.photometric2.length ? '#a2daee': '#00b8ec' }" style="borderTopColor:#00b8ec"></div>
 							<!-- 参数二 -->
@@ -69,7 +69,7 @@
 							<div v-if="item.photometric2.length" class="twoBox" v-bind:style="{height: item.photometric2[3] + 'rem', top: item.photometric2[4] + 'rem'}"></div>
 								<!-- 参数三 -->
 							<div v-if="item.photometric3.length && item.photometric2[0] > 0" 
-							class="threeBox" v-bind:style="{height: item.photometric3[3] + 'rem', top: 1.01 + item.photometric2[3] + 'rem'}">
+							class="threeBox" v-bind:style="{height: item.photometric3[3] + 'rem', top: 1.02 + item.photometric2[3] + 'rem'}">
 							</div>
 							<!-- 参数三 -->
 							<div v-if="item.photometric3.length && item.photometric2[0] <= 0" 
@@ -169,6 +169,174 @@
 				<div class="titleItem" v-if="pricepol" style="background: #66c6e9">{{item.pricepol}}</div>
 				<div class="titleItem" v-if="bluray" style="background: #66c6e9">{{item.bluray}}</div>
 			</div>
+		 </div>	 
+		 <div class="box"  v-if="swiperList.length>4" style="margin: .3rem 0">
+		 			<div class="title">
+		 				<div style="height: .29rem"></div>
+		 				<div class="titleItem">产品名称</div>
+		 				<div class="titleItem">折射率</div>
+		 				<div class="titleItem">阿贝数</div>
+		 				<div class="titleItem" v-if="film3">膜层</div>
+		 				<div class="titleItem" v-if="covert3">隐形标记</div>
+		 				<div class="titleItem" style="height: 5rem">光度范围</div>
+		 				<div class="titleItem" v-if="passageway3">通道</div>
+		 				<div class="titleItem" v-if="addLightBelow3">下加光</div>
+		 				<div class="titleItem" v-if="presentPrice3">现片价</div>
+		 			  <div class="titleItem" v-if="customPrice3">定制价</div>
+		 				<div class="titleItem" v-if="polarizing3">偏光价</div>
+		 				<div class="titleItem" v-if="pricepol3">偏光定制价</div>
+		 				<div class="titleItem" v-if="bluray3">蓝光片价</div>
+		 			</div>
+		 			<div class="title" v-for="(item, index) in swiperList.slice(4)" style="flex:1;height: 4rem;">
+		 				<el-checkbox :checked="item.checked" @change="getChooseItem(item.id, item.checked)" :disabled="disable">选择对比</el-checkbox>
+		 				<div class="titleItem" style="background: #00b9ed;color: #fff;">{{item.name}}</div>
+		 				<div class="titleItem" style="background: #efefef">{{item.refractive}}</div>
+		 				<div class="titleItem" style="background:#c9c9c9">{{item.abbe}}</div>
+		 				<div class="titleItem" style="background: #efefef" v-if="film">{{item.film}}</div>
+		 				<div class="titleItem" style="background: #c9c9c9" v-if="covert">{{item.covert}}</div>
+		 			<!-- 	嵌套类型 -->
+		 				<div class="titleItem" v-if="item.photometric1[0] >= 0 && item.photometric1[2] < 0 "
+		 				 style="height: 5rem; background: #bab9bf;display: flex; flex-direction: column;justify-content: center;">
+		 					<div class="topWrap" style="display: flex; flex-direction:row;justify-content:center;align-items: center;line-height: 0.2rem;">
+		 						<div class="leftWrap" style="position: relative" :style="{height: 2.5+ item.photometric1[3] + 'rem'}" >
+		 							<div v-if="item.photometric1.length" style="position: absolute;top: -0.1rem;right: 0">{{item.photometric1[0]}}D</div>
+		 							<!-- 第二个框上半部分 -->
+		 							<div v-if="item.photometric2[0]< 0" style="position: absolute;right: 0;"
+		 							 :style="{top: item.photometric2[4] + 'rem'}">{{item.photometric2[0]}}D</div>
+		 							<div v-if="item.photometric2[0] >  0 && (item.photometric1[0] !== item.photometric2[0])"  style="position: absolute;right: 0;"
+		 							 :style="{top: 1 -item.photometric1[5] + 'rem'}">
+		 							 {{item.photometric2[0]}}D
+		 							 </div>
+		 							<div style="position: absolute;right: 0;top: 0.8rem">0.00D</div>
+		 							<!-- 第二个框下半部分 -->
+		 							<div v-if="item.photometric2[0] >= 0" style="position: absolute;right: 0" 
+		 							:style="{top: item.photometric2[3] + 0.9 + 'rem'}">
+		 							{{item.photometric2[2]}}D</div>
+		 							<div v-if="item.photometric2[0] < 0" style="position: absolute;right: 0"
+		 							:style="{top: item.photometric2[3] + item.photometric2[4]- 0.1 + 'rem'}">
+		 							{{item.photometric2[2]}}D</div>
+		 							<!-- 第三个框的数据 -->
+		 							<div v-if="item.photometric3.length && item.photometric2[0] > 0" style="position: absolute;right: 0;" 
+		 							:style="{top: item.photometric3[4]- 0.1 + 'rem'}">{{item.photometric3[2]}}D</div>
+		 							<div v-if="item.photometric3.length && item.photometric2[0] <=0" style="position: absolute;right: 0;"
+		 							:style="{top: item.photometric3[4]- 0.1 + 'rem'}">{{item.photometric3[2]}}D</div>
+		 							<div style="position: absolute;right: 0;top:2.41rem">{{item.benchmark}}D</div>
+		 							<div v-if="item.photometric1.length" style="position: absolute;right: 0;" :style="{top: 2.4 + item.photometric1[3] + 'rem'}">{{item.photometric1[2]}}D</div>
+		 						</div>
+		 						<div class="centerWrap" style="position: relative">
+		 						<!-- 	参数1 -->
+		 							<div class="box1" :style="{background: item.photometric2.length? '#a2daee': '#00b8ec'}"></div>
+		 							<div style="width: 1.2rem;border: 0.01rem solid red;position:absolute;top: 1rem"></div>
+		 							<div class="box2"  :style="{background: item.photometric2.length? '#a2daee': '#00b8ec'}"></div>
+		 							<!-- 基线 -->
+		 							<div style="width: 1rem;border: 0.01rem dotted red;position:absolute;top:2.5rem"></div>
+		 							<div class="triangle" :style="{borderTopWidth:item.photometric1[3] + 'rem',
+		 							borderTopColor: item.photometric2.length ? '#a2daee': '#00b8ec' }" style="borderTopColor:#00b8ec"></div>
+		 							<!-- 参数二 -->
+		 							<div class="twoTopBox"  :style="{height: item.photometric1[5] + 'rem', top: 1-item.photometric1[5] + 'rem'}"></div>
+		 							<div v-if="item.photometric2.length" class="twoBox" v-bind:style="{height: item.photometric2[3] + 'rem', top: item.photometric2[4] + 'rem'}"></div>
+		 								<!-- 参数三 -->
+		 							<div v-if="item.photometric3.length && item.photometric2[0] > 0" 
+		 							class="threeBox" v-bind:style="{height: item.photometric3[3] + 'rem', top: 1.02 + item.photometric2[3] + 'rem'}">
+		 							</div>
+		 							<!-- 参数三 -->
+		 							<div v-if="item.photometric3.length && item.photometric2[0] <= 0" 
+		 							class="threeBox" v-bind:style="{height: item.photometric3[3] + 'rem', top: item.photometric3[4] - item.photometric3[3]+ 'rem'}">
+		 							</div>
+		 							<div v-if="item.photometric2.length && item.photometric2[0] >= 0" 
+		 							style="position: absolute;left: 0.33rem;top: 0.8rem">{{item.photometric2[1]}}D</div>
+		 							
+		 							<div v-if="item.photometric2.length && item.photometric2[0] < 0"
+		 							style="position: absolute;left: 0.33rem;" :style="{top: item.photometric2[4] + 'rem'}">{{item.photometric2[1]}}D</div>
+		 						</div>
+		 						<div class="leftWrap" style="position: relative" :style="{height: 2.5+ item.photometric1[3] + 'rem'}">
+		 							<div v-if="item.photometric1.length" style="position: absolute;left: 0.1rem;top: 0.8rem">{{item.photometric1[1]}}D</div>
+		 						</div>
+		 						
+		 					</div>
+		 					<div class="bottomWrap">
+		 						<div class="des">{{item.sphericalMirror}}</div>
+		 						<div class="des">{{item.colonoscope}}</div>
+		 						<div class="des">{{item.onTheSpot}}</div>
+		 					</div>
+		 				</div>
+		 				<div class="titleItemSecond" v-if="item.photometric1[0] < 0"
+		 				 style="height: 5rem; background: #bab9bf;">
+		 					<div class="twoLeftWrap"  style="position: relative; width: 50px;" :style="{height: item.photometric1[4] + 'rem'}">
+		 						<div style="position: absolute;right:3px; top: -0.10rem"  
+		 						 v-if="item.photometric2.length"> {{item.photometric2[2]}}</div>
+		 						<div style="position: absolute;right:3px;" :style="{top: item.photometric2[3]- 0.1 + 'rem'}"   
+		 						v-if="item.photometric1.length"> {{item.photometric1[0]}}</div>
+		 						<div style="position: absolute;right:3px;" :style="{top: item.photometric1[3] + item.photometric2[3] - 0.1 + 'rem'}"   
+		 						v-if="item.photometric1.length && item.photometric2.length"> {{item.photometric1[2]}}</div>
+		 						<div style="position: absolute;right:3px;" :style="{top: item.photometric1[3] - 0.1 + 'rem'}"
+		 						v-if="item.photometric1.length && item.photometric3.length && !item.photometric2.length"> 
+		 						{{item.photometric1[2]}}</div>
+		 						<div style="position: absolute;right:3px;" :style="{top: item.photometric1[3] - 0.1 + 'rem'}"
+		 						v-if="item.photometric1.length && !item.photometric3.length && !item.photometric2.length"> 
+		 						{{item.photometric1[2]}}</div>
+		 						<div style="position: absolute;right:3px;" 
+		 						:style="{top: item.photometric1[3] + item.photometric2[3] + item.photometric3[3] - 0.1 + 'rem'}"
+		 						v-if="item.photometric1.length && item.photometric2.length && item.photometric3.length"> 
+		 						{{item.photometric3[0]}}</div>
+		 						<div style="position: absolute;right:3px;" 
+		 						:style="{top: item.photometric1[3] + item.photometric3[3]- 0.1 + 'rem'}"  
+		 							v-if="item.photometric1.length && item.photometric3.length && !item.photometric2.length">
+		 						{{item.photometric3[0]}}</div>
+		 					</div>
+		 					<div class="secondCenterWrap" style="position: relative">
+		 						<div class="smBox1" v-if="item.shape2 == 1 && item.photometric2.length"></div> <!-- 矩形：1 三角形：2 上梯形：3 下梯形：4 -->
+		 						<div class="secondTrigger" v-if="item.shape2 == 2 && item.photometric2.length"></div>
+		 						<div class="mask1" v-if="item.shape2 == 3 && item.photometric2.length"></div>
+		 						<div class="mask2" v-if="item.shape2 == 4 && item.photometric2.length"></div>
+		 						<div style="border: 1px solid #fff"></div>
+		 						<div class="secondBox1" v-if="item.shape1 == 1 && item.photometric1.length"></div> <!-- 矩形：1 三角形：2 上梯形：3 下梯形：4 -->
+		 						<div class="secondTrigger" v-if="item.shape1 == 2 && item.photometric1.length"></div>
+		 						<div class="mask1" v-if="item.shape1 == 3 && item.photometric1.length"></div>
+		 						<div class="mask2" v-if="item.shape1 == 4 && item.photometric1.length"></div>
+		 				
+		 						<div style="border: 1px solid #fff"></div>
+		 						<div class="secondBox1" v-if="item.shape3== 1 && item.photometric3.length"></div> <!-- 矩形：1 三角形：2 上梯形：3 下梯形：4 -->
+		 						<div class="secondTrigger" v-if="item.shape3 == 2 && item.photometric3.length"></div>
+		 						<div class="mask1" v-if="item.shape3 == 3 && item.photometric3.length"></div>
+		 						<div class="mask2" v-if="item.shape3 == 4 && item.photometric3.length"></div>
+		 						<div class="secondBox1" v-if="item.shape4 == 1 && item.photometric4.length"></div> <!-- 矩形：1 三角形：2 上梯形：3 下梯形：4 -->
+		 						<div class="secondTrigger" v-if="item.shape4 == 2 && item.photometric4.length"></div>
+		 						<div class="mask1" v-if="item.shape4 == 3 && item.photometric4.length"></div>
+		 						<div class="mask2" v-if="item.shape4 == 4 && item.photometric4.length"></div>
+		 					</div>
+		 					<div class="twoLeftWrap"  style="position: relative; width: 50px;" :style="{height: item.photometric1[4] + 'rem'}">
+		 						<div style="position: absolute;left:3px;" :style="{top: item.photometric1[3] + item.photometric2[3] - 0.1 + 'rem'}"
+		 						v-if="item.photometric1.length && item.photometric2.length"> 
+		 						{{item.photometric1[1]}}</div>
+		 						<div style="position: absolute;left:3px;" :style="{top: item.photometric1[3] - 0.1 + 'rem'}"
+		 						v-if="item.photometric1.length && item.photometric3.length && !item.photometric2.length">
+		 						{{item.photometric1[1]}}</div>
+		 						<div style="position: absolute;left:3px;" :style="{top: item.photometric1[3] - 0.1 + 'rem'}"
+		 						v-if="item.photometric1.length && !item.photometric3.length && !item.photometric2.length">
+		 						{{item.photometric1[1]}}</div>
+		 					</div>
+		 				</div>
+		 				<div class="titleItemThird" v-if="item.photometric1[0] >= 0 && item.photometric1[2] > 0">
+		 					<div class="thirdLeft"  style="position: relative; width: 0.5rem;height: 2.5rem">
+		 						<div style="position: absolute; top: -0.1rem;right: 0.03rem">{{item.photometric1[2]}}D</div>
+		 						<div style="position: absolute; top: 2.4rem;right: 0.03rem">{{item.photometric1[0]}}D</div>
+		 					</div>
+		 					<div class="thirdCenter">
+		 						<div class="thirdBox"></div>
+		 					</div>
+		 					<div class="thirdRight"  style="position: relative; width: 0.5rem;height: 2.5rem">
+		 							<div style="position: absolute; top: -0.1rem;left: 0.03rem">{{item.photometric1[1]}}D</div>
+		 					</div>
+		 				</div>
+		 				<div class="titleItem" v-if="passageway">{{item.passageway}}</div>
+		 				<div class="titleItem" v-if="item.addLightBelow">{{item.addLightBelow}}D</div>
+		 				<div class="titleItem" v-if="item.presentPrice"style="background: #66c6e9">{{item.presentPrice}} </div>	
+		 				<div class="titleItem" v-if="item.customPrice" style="background: #66c6e9">{{item.customPrice}}</div>
+		 				<div class="titleItem" v-if="polarizing3" style="background: #66c6e9">{{item.polarizing}}</div>
+		 				<div class="titleItem" v-if="pricepol3" style="background: #66c6e9">{{item.pricepol}}</div>
+		 				<div class="titleItem" v-if="bluray3" style="background: #66c6e9">{{item.bluray}}</div>
+		 			</div>
 		 </div>	
     </div>
   </div>
@@ -218,7 +386,16 @@
 					pricepol: false,
 					bluray: false,
 					film: false,
-					covert: false
+					covert: false,
+					addLightBelow3: false,
+					customPrice3: false,
+					presentPrice3: false,
+					polarizing3: false,
+					passageway3: false,
+					pricepol3: false,
+					bluray3: false,
+					film3: false,
+					covert3: false
           }
         },
       methods: {
@@ -277,34 +454,68 @@
 				this.closeFullScreen(this.openFullScreen())
           if(res.data.status == 200) {
             this.swiperList = res.data.data;
+						if(this.swiperList.length <=4) {
+							this.swiperLength = res.data.data.length;
+						}
 						this.swiperList.forEach((item, index) => {
-							if(item.film) {
-									this.film = true
-							}
-							if(item.covert) {
-									this.covert = true
-							}
-							if(item.addLightBelow) {
-								this.addLightBelow = true
-							} 
-							if(item.customPrice) {
-								this.customPrice = true
-							}
-							if(item.presentPrice) {
-								this.presentPrice = true
-							}
-							if(item.polarizing) {
-								this.polarizing = true
-							}
-							if(item.passageway) {
-								this.passageway = true
-							}
-							if(item.pricepol) {
-								this.pricepol = true
-							}
-							if(item.bluray) {
-								this.bluray = true
-							}
+							if(index <= 3) {
+								if(item.film) {
+										this.film = true
+								}
+								if(item.covert) {
+										this.covert = true
+								}
+								if(item.addLightBelow) {
+									this.addLightBelow = true
+								} 
+								if(item.customPrice) {
+									this.customPrice = true
+								}
+								if(item.presentPrice) {
+									this.presentPrice = true
+								}
+								if(item.polarizing) {
+									this.polarizing = true
+								}
+								if(item.passageway) {
+									this.passageway = true
+								}
+								if(item.pricepol) {
+									this.pricepol = true
+								}
+								if(item.bluray) {
+									this.bluray = true
+								}
+								}
+								if(index>3) {
+									if(item.film) {
+											this.film3 = true
+									}
+									if(item.covert) {
+											this.covert3 = true
+									}
+									if(item.addLightBelow) {
+										this.addLightBelow3 = true
+									} 
+									if(item.customPrice) {
+										this.customPrice3 = true
+									}
+									if(item.presentPrice) {
+										this.presentPrice3 = true
+									}
+									if(item.polarizing) {
+										this.polarizing3 = true
+									}
+									if(item.passageway) {
+										this.passageway3 = true
+									}
+									if(item.pricepol) {
+										this.pricepol3 = true
+									}
+									if(item.bluray) {
+										this.bluray3 = true
+									}
+								}
 							//上面的高度 动态
 							if(item.photometric1[0] > 0) {
 								if(item.photometric1.length) {
@@ -314,10 +525,10 @@
 									// 第二个广度范围下负数 广度范围
 									if(item.photometric2[0] > 0) {
 									item.photometric2[3] = 1.5 * item.photometric2[2] / item.benchmark;  //高度
-									item.photometric2[4] = 1.01; // 距离顶部距离
+									item.photometric2[4] = 1.02; // 距离顶部距离
 									}else {
 										item.photometric2[3] = 1.5 * (item.photometric2[2] - item.photometric2[0])/ item.benchmark;  //高度
-										item.photometric2[4] = 1.5 * item.photometric2[0] / item.benchmark + 1.01; //  第二个光度范围下半部分矩形
+										item.photometric2[4] = 1.5 * item.photometric2[0] / item.benchmark + 1.02; //  第二个光度范围下半部分矩形
 									}
 								}
 								
@@ -328,7 +539,7 @@
 								// 第三个的高度
 								if(item.photometric3.length) {
 									item.photometric3[3] =  1.5 * (item.photometric3[2] - item.photometric3[0])  / item.benchmark //第三个的高度
-									item.photometric3[4] = 1.5 * item.photometric3[2]  / item.benchmark + 1.01;
+									item.photometric3[4] = 1.5 * item.photometric3[2]  / item.benchmark + 1.02;
 								}
 							} else {  //如果第一个广度范围小于0 重新开始计算图形计其位置
 								if(item.photometric1.length) {
@@ -455,7 +666,7 @@
 						background: #00b8ec
 						position: absolute
 						left: 0
-						top: 1.01rem
+						top: 1.02rem
 					.twoTopBox
 							position: absolute;
 							left: 0;
