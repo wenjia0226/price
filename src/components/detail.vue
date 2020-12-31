@@ -14,6 +14,7 @@
 					<div class="titleItem" v-if="passageway">通道</div>
 					<div class="titleItem" v-if="addLightBelow">下加光</div>
 					<div class="titleItem" v-if="presentPrice">现片价</div>
+					<div class="titleItem" style="height: 3rem" v-if="customFile">定制片光度范围</div>
 					<div class="titleItem" v-if="customPrice">定制价</div>
 					<div class="titleItem" v-if="polarizing">偏光价</div>
 					<div class="titleItem" v-if="pricepol">偏光定制价</div>
@@ -32,6 +33,9 @@
 					<div class="titleItem" v-if="passageway">{{item.passageway}}</div>
 					<div class="titleItem" v-if="item.addLightBelow">{{item.addLightBelow}}D</div>
 					<div class="titleItem" v-if="item.presentPrice"style="background: #66c6e9">{{item.presentPrice}} </div>	
+					<div  class="titleItem" style="height: 3rem;background: #efefef"  v-if="customFile">
+						<el-image :src="item.customFile" fit="contain"></el-image>
+					</div>
 					<div class="titleItem" v-if="item.customPrice" style="background: #66c6e9">{{item.customPrice}}</div>
 					<div class="titleItem" v-if="polarizing" style="background: #66c6e9">{{item.polarizing}}</div>
 					<div class="titleItem" v-if="pricepol" style="background: #66c6e9">{{item.pricepol}}</div>
@@ -95,7 +99,8 @@
 					pricepol3: false,
 					bluray3: false,
 					film3: false,
-					covert3: false
+					covert3: false,
+					customFile: false
           }
         },
       methods: {
@@ -181,6 +186,9 @@
 								}
 								if(item.bluray) {
 									this.bluray = true
+								}
+								if(item.customFile) {
+									this.customFile = true;
 								}
 						})		
           }		

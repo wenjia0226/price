@@ -11,7 +11,6 @@
 	<div class="swiperWrap" @dblclick="goBack">
 		<div class="box">
 			<div class="title">
-				<div style="height: .29rem"></div>
 				<div class="titleItem">产品名称</div>
 				<div class="titleItem">折射率</div>
 				<div class="titleItem">阿贝数</div>
@@ -27,7 +26,7 @@
 				<div class="titleItem" v-if="bluray">蓝光片价</div>
 			</div>
 			<div class="title" style="flex:1;height: 4rem;"v-for="(item, index) in differentList">
-				<el-checkbox :checked="item.checked" @change="getChooseItem(item.id, item.checked)" :disabled="disable">选择对比</el-checkbox>
+			<!-- 	<el-checkbox :checked="item.checked" @change="getChooseItem(item.id, item.checked)" :disabled="disable">选择对比</el-checkbox> -->
 				<div class="titleItem" style="background: #00b9ed;color: #fff;">{{item.name}}</div>
 				<div class="titleItem" style="background: #efefef">{{item.refractive}}</div>
 				<div class="titleItem" style="background:#c9c9c9">{{item.abbe}}</div>
@@ -97,7 +96,7 @@ export default {
 	     loading.close()
 	   },
 	getDifferent() {
-	this.openFullScreen()
+		this.openFullScreen()
       let param = new FormData();
       param.append('glasses', this.one + ',' + this.two + ','  + this.three);
       axios({
@@ -111,6 +110,7 @@ export default {
 		if(res.data.status == 200) {
 		    this.differentList = res.data.data;
 				this.differentList.forEach((item, index) => {
+					item.disable = false;
 					if(!item.film) {
 							item.film = '无'
 					}
@@ -165,6 +165,7 @@ export default {
 					if(item.bluray) {
 						this.bluray = true
 					}
+					
 					})			
 		}
 	 }
